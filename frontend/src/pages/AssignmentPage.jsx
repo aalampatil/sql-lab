@@ -1,6 +1,8 @@
 import SqlEditor from "../components/SqlEditor";
 import AssignmentType from "../components/AssignmentType";
 import Description from "../components/Description";
+import Result from "../components/Result";
+import DatabaseSchema from "../components/DatabaseSchema";
 
 export function AssignmentPage() {
   return (
@@ -21,9 +23,13 @@ export function AssignmentPage() {
             <SqlEditor />
           </div>
 
-          <div className="border p-4">Database Schema</div>
+          <div className="border p-4">
+            <DatabaseSchema />
+          </div>
 
-          <div className="border p-4">Result</div>
+          <div className="border p-4">
+            <Result />
+          </div>
         </div>
       </div>
     </>

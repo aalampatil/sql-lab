@@ -9,6 +9,36 @@ export const DataContextProvider = ({ children }) => {
   const [current, setCurrent] = useState("");
   const [query, setQuery] = useState("");
   const [challengeData, setChallengeData] = useState([]);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const executeQuery = async (challengeId, query) => {
+    try {
+      setLoading(true);
+
+      const response = await axiosApi.post("/api/query/execute-query", {
+        challengeId,
+        query,
+      });
+
+      const { success, message, result } = response.data;
+
+      if (success) {
+        setResult(result);
+        setMessage(message);
+      } else {
+        setResult(null);
+        setMessage("Incorrect");
+      }
+    } catch (error) {
+      console.error(error);
+      setResult(null);
+      setMessage("Query failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchChallenges = async () => {
     try {
@@ -17,18 +47,6 @@ export const DataContextProvider = ({ children }) => {
       if (response.data.success) {
         setChallengeData(response.data.data);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const executeQuery = async (challengeId, query) => {
-    try {
-      const response = await axiosApi.post("/api/query/execute-query", {
-        challengeId,
-        query,
-      });
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -47,6 +65,9 @@ export const DataContextProvider = ({ children }) => {
     setQuery,
     challengeData,
     executeQuery,
+    result,
+    loading,
+    message,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

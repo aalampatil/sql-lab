@@ -24,7 +24,7 @@ function Navbar() {
               className="text-orange-600 cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <p className="text-sm font-semibold">Cipher SqlStudios</p>
+              <p className="text-sm font-semibold">Sql Lab</p>
             </div>
           </div>
 
